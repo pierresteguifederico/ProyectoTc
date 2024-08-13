@@ -3,42 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto Final</title>
+    <title>Página Principal</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
             color: #333;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             text-align: center;
         }
         header {
-            background: #007bff;
+            background-color: #007bff;
             color: #fff;
-            padding: 1em 2em;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            padding: 1em 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         header h1 {
             margin: 0;
-            font-size: 3em;
+            font-size: 2.5em;
+        }
+        h2{
+            text-align: center;
+        }
+        nav {
+            margin: 1em 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            background-color: #0056b3;
+            padding: 0.5em 1.5em;
+            border-radius: 5px;
+            margin: 0 0.5em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #004494;
+        }
+        .container {
+            padding: 2em;
+        }
+        .content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 1em auto;
+            max-width: 800px;
+            padding: 2em;
+            text-align: left;
         }
         footer {
-            margin-top: 2em;
-            background: #007bff;
+            background-color: #007bff;
             color: #fff;
-            padding: 1em 2em;
-            border-radius: 8px;
-            box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
-            position: absolute;
+            padding: 1em 0;
+            position: fixed;
             bottom: 0;
             width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
         footer p {
             margin: 0;
@@ -47,10 +70,23 @@
 </head>
 <body>
     <header>
-        <h1>Proyecto Final Todo Code</h1>
+        <h1>Proyecto Gestión de Ventas</h1>
+        <nav>
+            <a href="https://proyectotc.onrender.com/productos/crear.html">Crear Producto</a>
+            <a href="https://proyectotc.onrender.com/productos/editar.html">Editar Producto</a>
+            <a href="https://proyectotc.onrender.com/productos/producto.html">Ver Producto</a>
+            <a href="https://proyectotc.onrender.com/productos/eliminar.html">Eliminar Producto</a>
+            <a href="https://proyectotc.onrender.com/productos/listar.html">Listar Productos</a>
+        </nav>
     </header>
+    <div class="container">
+        <div class="content">
+            <h2>Bienvenido al Proyecto Final</h2>
+            <p>Aplicación web para la gestión de productos. Utiliza los enlaces del menú de navegación para interactuar con las diferentes funcionalidades disponibles.</p>
+        </div>
+    </div>
     <footer>
-        <p>&copy; 2024 Federico. Todos los derechos reservados.</p>
+        <p>&copy; 2024 Tu Nombre o Tu Empresa. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
