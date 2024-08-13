@@ -61,7 +61,7 @@
 
     try {
         // Verificar si el producto existe antes de eliminarlo
-        const checkResponse = await fetch(`http://localhost:8080/productos/id/${productoId}`);
+        const checkResponse = await fetch(`https://proyectotc.onrender.com/productos/id/${productoId}`);
         if (!checkResponse.ok) {
             if (checkResponse.status === 404) {
                 alert('Producto no encontrado.');
@@ -73,7 +73,7 @@
         }
 
         // Si el producto existe, proceder a eliminarlo
-        const deleteResponse = await fetch(`http://localhost:8080/productos/eliminar/${productoId}`, {
+        const deleteResponse = await fetch(`https://proyectotc.onrender.com/productos/eliminar/${productoId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
