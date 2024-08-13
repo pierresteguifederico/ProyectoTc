@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style> 
+    body {
+    font: bold italic 15px Verdana;
+    }       
+    h1{
+        text-align: center;
+    }
+    #formulario{
+        background-color: #ddd;
+        text-align: center;
+        height:400px;
+        width: 300px;
+        margin:60px auto;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 10px -10px 20px #aaa; 
+      }
+    #formulario label {
+    display: block;
+    margin: 10px;
+        }
+    #formulario input {
+        border: none;   
+        border-radius: 5px;
+        width: 300px;
+    }    
+    #formulario button {
+       font-weight: bold;
+       border: 1px solid #FFFFFF;
+       border-radius: 5px;
+       width: 30%; 
+       margin: 20px;
+       padding:5px 10px;    
+    }    
+</style>
+<body>
+<div id="formulario">      
+<h1>Crear Producto</h1>
+<form>
+    <label for="nombre_id">Nombre:</label>
+    <input type="text" id="nombre_id" name="nombre_id"><br>
+    <label for="marca_id">Marca:</label>
+    <input type="text" id="marca_id" name="marca_id"><br>
+    <label for="precio_id">Precio:</label>
+    <input type="number" id="precio_id" name="precio_id"><br>
+    <label for="stock_id">Stock:</label>
+    <input type="number" id="stock_id" name="stock_id"><br>
+    <button type="submit">Agregar Producto</button>
+    <button type="clear">Limpiar Lista</button>
+</form>
+</div> 
+</body>
+</html>

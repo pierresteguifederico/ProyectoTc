@@ -1,0 +1,16 @@
+com\fmp\proyectotc\repository\ClienteRepository.class
+com\fmp\proyectotc\ProyectotcApplication.class
+com\fmp\proyectotc\service\ProductoServiceImpl.class
+com\fmp\proyectotc\repository\VentaRepository.class
+com\fmp\proyectotc\service\ClienteService.class
+com\fmp\proyectotc\service\ClienteServiceImpl.class
+com\fmp\proyectotc\controller\ClienteController.class
+com\fmp\proyectotc\model\Venta.class
+com\fmp\proyectotc\service\ProductoService.class
+com\fmp\proyectotc\controller\VentaController.class
+com\fmp\proyectotc\service\VentaService.class
+com\fmp\proyectotc\model\Cliente.class
+com\fmp\proyectotc\repository\ProductoRepository.class
+com\fmp\proyectotc\controller\ProductoController.class
+com\fmp\proyectotc\service\VentaServiceImpl.class
+com\fmp\proyectotc\model\Producto.class

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Producto</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
+    </head>
+    <style>
+        body{ 
+            font: bold italic 15px Verdana;
+                }
+        h1{
+        text-align: center;
+              }
+        #productos{
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .producto{
+        display: block;
+        margin: 10px auto;
+        background-color: #ddd;
+        text-align: center;
+        height:150px;
+        width: 90%;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 10px -10px 20px #aaa; 
+      }
+
+        .producto h2 {
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .producto p {
+            color: #555;
+            font-size: 15px;
+            margin:15px;
+            }
+    </style>
+
+<body>
+    <h1>Lista de Productos</h1>
+<div id="productos">
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    fetchProductos()
+
+function fetchProductos() {
+    fetch('http://localhost:8080/productos')
+        .then(response => response.json())
+        .then(data => {
+            const productosContainer = document.getElementById('productos');
+            productosContainer.innerHTML = '';
+            data.forEach(producto => {
+                const productoDiv = document.createElement('div');
+                productoDiv.classList.add('producto');
+                    const safeHTML = DOMPurify.sanitize( `
+                    <h2>Nombre: ${producto.nombre}</h2>
+                    <p>Marca: ${producto.marca}</p>
+                    <p><strong>Precio: $${producto.precio.toFixed(2)}</strong></p>
+                    <h5>Stock: ${producto.stock}</h5>
+                    <h6>Código: ${producto.codigo_producto}</h6>
+                `);
+                productoDiv.innerHTML = safeHTML;
+                productosContainer.appendChild(productoDiv)
+            })
+        })
+        .catch(error => console.error('Error al obtener los artículos:', error))
+}})
+</script>
+</html>
