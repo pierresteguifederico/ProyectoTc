@@ -17,7 +17,7 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> getAllClientes() {
+    public List<Cliente> listarClientes() {
         return clienteService.getAllClientes();
     }
 
@@ -40,7 +40,7 @@ public class ClienteController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @DeleteMapping ("/eliminar/{id_cliente}")
-    public void deleteCliente(@PathVariable Long id){
+    public void eliminarCliente(@PathVariable Long id){
         clienteService.deleteCliente(id);
 
     }

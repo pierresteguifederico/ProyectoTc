@@ -2,8 +2,9 @@ package com.fmp.proyectotc.controller;
 
 import com.fmp.proyectotc.model.Venta;
 import com.fmp.proyectotc.service.VentaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,21 +17,45 @@ public class VentaController {
     }
 
     @GetMapping
-    public List<Venta> obtenerVentas() {
+    public List<Venta> listarVentas() {
         return ventaService.getAllVentas();
-    }
-    @GetMapping("/{id}")
-    public Venta getArticuloById(@PathVariable Long codigo_venta) {
-        return ventaService.getVentaById(codigo_venta);
     }
 
     @PostMapping("/crear")
-    public Venta createArticulo(@RequestBody Venta venta) {
-        return ventaService.saveVenta(venta);
+    public ResponseEntity<Object> crearVenta(@RequestBody Venta venta) {
+        try {
+            ventaService.saveVenta(venta);
+            return new ResponseEntity<>(venta, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @DeleteMapping("/eliminar/{id_venta}")
+    public void eliminarVenta(@PathVariable Long id_venta) {
+        ventaService.deleteVenta(id_venta);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteArticulo(@PathVariable Long codigo_venta) {
-        ventaService.deleteVenta(codigo_venta);
+    @GetMapping("/id/{id_venta}")
+    public ResponseEntity<Venta> obtenerVenta (@PathVariable Long id_venta) {
+        Venta venta = ventaService.getVentaById(id_venta);
+        if (venta != null) {
+            return new ResponseEntity<>(venta, HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @PutMapping("/editar/{id_venta}")
+    public ResponseEntity<Object> modificarVenta(@PathVariable Long id_venta, @RequestBody Venta venta) {
+        try {
+            Venta ventaExistente = ventaService.getVentaById(id_venta);
+            if (ventaExistente == null) {
+                return new ResponseEntity<>("Venta no encontrada", HttpStatus.NOT_FOUND);
+            }
+            venta.setId_venta(id_venta);
+            ventaService.saveVenta(venta);
+            return new ResponseEntity<>(venta, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

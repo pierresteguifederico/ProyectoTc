@@ -33,13 +33,13 @@ public class ProductoController {
     }
 
     @DeleteMapping("/eliminar/{codigo_producto}")
-    public void deleteArticulo(@PathVariable Long codigo_producto) {
+    public void eliminarProducto(@PathVariable Long codigo_producto) {
         productoService.deleteProducto(codigo_producto);
     }
 
 
     @GetMapping("/id/{codigo_producto}")
-    public ResponseEntity<Producto> obtenerProductos (@PathVariable Long codigo_producto) {
+    public ResponseEntity<Producto> obtenerProducto (@PathVariable Long codigo_producto) {
         Producto producto = productoService.getProductoById(codigo_producto);
         if (producto != null) {
             return new ResponseEntity<>(producto, HttpStatus.OK);
