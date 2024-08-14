@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Cliente</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
+    <style>
+        body { 
+            font: bold italic 15px Verdana;
+        }
+        h1 {
+            text-align: center;
+        }
+        #clientes {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .cliente {
+            display: block;
+            margin: 10px auto;
+            background-color: #ddd;
+            text-align: center;
+            height: 200px;
+            width: 90%;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa; 
+        }
+        .cliente h2 {
+            font-size: 20px;
+            margin: 5px;
+        }
+        .cliente p {
+            color: #555;
+            font-size: 15px;
+            margin: 15px;
+        }
+        #buscar-container {
+            text-align: center;
+            margin: 20px;
+        }
+        #buscar-container input {
+            padding: 10px;
+            font-size: 15px;
+        }
+        #buscar-container button {
+            padding: 10px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar Cliente</h1>
+    <div id="buscar-container">
+        <input type="text" id="cliente-id" placeholder="Ingrese ID del cliente">
+        <button id="buscar-btn">Buscar</button>
+    </div>
+    <div id="clientes"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buscarBtn = document.getElementById('buscar-btn');
+            buscarBtn.addEventListener('click', () => {
+                const clienteId = document.getElementById('cliente-id').value;
+                if (clienteId) {
+                    fetchCliente(clienteId);
+                } else {
+                    alert('Por favor, ingrese un ID de cliente.');
+                }
+            });
+
+            function fetchCliente(id) {
+                fetch(`https://proyectotc.onrender.com/clientes/id/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const clientesContainer = document.getElementById('clientes');
+                        clientesContainer.innerHTML = '';
+                        if (data) {
+                            const clienteDiv = document.createElement('div');
+                            clienteDiv.classList.add('cliente');
+                            const safeHTML = DOMPurify.sanitize(`
+                                <h2>Nombre: ${data.nombre} ${data.apellido}</h2>
+                                <p>DNI: ${data.dni}</p>
+                                <h5>Código Cliente: ${data.id_cliente}</h5>
+                                <p><strong>Total Ventas: ${data.ventas.length}</strong></p>
+                            `);
+                            clienteDiv.innerHTML = safeHTML;
+                            clientesContainer.appendChild(clienteDiv);
+                        } else {
+                            clientesContainer.innerHTML = '<p>Cliente no encontrado.</p>';
+                        }
+                    })
+                    .catch(error => alert('Error al obtener el cliente'));
+            }
+        });
+    </script>
+</body>
+</html>

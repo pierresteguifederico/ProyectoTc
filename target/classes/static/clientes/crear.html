@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cliente</title>
+    <style> 
+        body {
+            font: bold italic 15px Verdana;
+        }       
+        h1 {
+            text-align: center;
+        }
+        #formulario {
+            background-color: #ddd;
+            text-align: center;
+            height: 400px;
+            width: 300px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa; 
+        }
+        #formulario label {
+            display: block;
+            margin: 10px;
+        }
+        #formulario input {
+            border: none;   
+            border-radius: 5px;
+            width: 300px;
+        }    
+        #formulario button {
+            font-weight: bold;
+            border: 1px solid #FFFFFF;
+            border-radius: 5px;
+            width: 60%; 
+            margin: 20px;
+            padding: 5px 10px;    
+        }    
+    </style>
+</head>
+<body>
+    <div id="formulario">      
+        <h1>Crear Cliente</h1>
+        <form id="cliente_formulario">
+            <label for="nombre_id">Nombre:</label>
+            <input type="text" id="nombre_id" name="nombre_id" required><br>
+            <label for="apellido_id">Apellido:</label>
+            <input type="text" id="apellido_id" name="apellido_id" required><br>
+            <label for="dni_id">DNI:</label>
+            <input type="text" id="dni_id" name="dni_id" required><br>
+            <label for="venta_id">ID de Venta:</label>
+            <input type="number" id="venta_id" name="venta_id" required><br>
+            <button type="submit">Agregar Cliente</button>
+        </form>
+    </div> 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const clienteForm = document.getElementById('cliente_formulario');
+
+            clienteForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const nuevoCliente = {
+                    nombre: document.getElementById('nombre_id').value,
+                    apellido: document.getElementById('apellido_id').value,
+                    dni: document.getElementById('dni_id').value,
+                    // El ID de venta no se envía al backend en este caso.
+                    // Solo se asocia el cliente con una venta en la lógica del backend.
+                };
+
+                try {
+                    await fetch('https://proyectotc.onrender.com/clientes/crear', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(nuevoCliente)
+                    });
+
+                    alert("Cliente creado con éxito");
+                    clienteForm.reset();
+                } catch (error) {
+                    alert("Error al crear el cliente");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

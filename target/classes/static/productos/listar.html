@@ -14,20 +14,22 @@
         text-align: center;
               }
         #productos{
-            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
             box-sizing: border-box;
         }
-        .producto{
-        display: block;
-        margin: 10px auto;
+        .producto{ 
         background-color: #ddd;
-        text-align: center;
-        height:150px;
-        width: 300px;
-        padding: 40px;
+        height:400px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         border-radius: 20px;
-        box-shadow: 10px -10px 20px #aaa; 
-        overflow-wrap: break-word; 
+        box-shadow: 10px -10px 20px #aaa;
+        overflow-wrap: break-word;  
       }
 
         .producto h2 {

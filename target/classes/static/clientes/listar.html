@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Clientes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
+    <style>
+        body{ 
+            font: bold italic 15px Verdana;
+        }
+        h1{
+            text-align: center;
+        }
+        #clientes{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .cliente{ 
+            background-color: #ddd;
+            height: 300px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa;
+            overflow-wrap: break-word;  
+        }
+        .cliente h2 {
+            font-size: 20px;
+            margin: 5px;
+        }
+        .cliente p {
+            color: #555;
+            font-size: 15px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+    <div id="clientes"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchClientes();
+
+            function fetchClientes() {
+                fetch('https://proyectotc.onrender.com/clientes')
+                    .then(response => response.json())
+                    .then(data => {
+                        const clientesContainer = document.getElementById('clientes');
+                        clientesContainer.innerHTML = '';
+                        data.forEach(cliente => {
+                            const clienteDiv = document.createElement('div');
+                            clienteDiv.classList.add('cliente');
+                            const safeHTML = DOMPurify.sanitize(`
+                                <h2>Nombre: ${cliente.nombre} ${cliente.apellido}</h2>
+                                <p>DNI: ${cliente.dni}</p>
+                                <h5>Código Cliente: ${cliente.id_cliente}</h5>
+                                <p><strong>Total Ventas: ${cliente.ventas.length}</strong></p>
+                            `);
+                            clienteDiv.innerHTML = safeHTML;
+                            clientesContainer.appendChild(clienteDiv);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener los clientes:', error));
+            }
+        });
+    </script>
+</body>
+</html>
