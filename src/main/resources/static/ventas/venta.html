@@ -71,7 +71,7 @@
             });
 
             function fetchVenta(id) {
-                fetch(`https://proyectotc.onrender.com/ventas/id/${id_venta}`)
+                fetch(`https://proyectotc.onrender.com/ventas/id/${id}`)
                     .then(response => response.json())
                     .then(data => {
                         const ventasContainer = document.getElementById('ventas');
