@@ -68,7 +68,7 @@
           precio : document.getElementById('precio_id').value,
           stock : document.getElementById('stock_id').value
           };
-  try{    await fetch('http://localhost:8080/productos/crear', {
+  try{    await fetch('https://proyectotc.onrender.com/productos/crear', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
