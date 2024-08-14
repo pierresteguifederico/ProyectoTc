@@ -80,9 +80,9 @@
                             const clienteDiv = document.createElement('div');
                             clienteDiv.classList.add('cliente');
                             const safeHTML = DOMPurify.sanitize(`
-                                <h2>Nombre: ${cliente.nombre} ${cliente.apellido}</h2>
-                                <p>DNI: ${cliente.dni}</p>
-                                <h5>Código Cliente: ${cliente.id_cliente}</h5>
+                                <h2>Nombre: ${data.nombre} ${data.apellido}</h2>
+                                <p>DNI: ${data.dni}</p>
+                                <h5>Código Cliente: ${data.id_cliente}</h5>
                             `);
                             clienteDiv.innerHTML = safeHTML;
                             clientesContainer.appendChild(clienteDiv);

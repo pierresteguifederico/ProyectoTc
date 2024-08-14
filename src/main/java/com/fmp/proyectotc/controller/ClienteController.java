@@ -45,7 +45,7 @@ public class ClienteController {
 
     }
     @PutMapping("/editar/{id_cliente}")
-    public ResponseEntity<Object> modificarProducto(@PathVariable Long id_cliente, @RequestBody Cliente cliente) {
+    public ResponseEntity<Object> modificarCliente(@PathVariable Long id_cliente, @RequestBody Cliente cliente) {
         try {
             Cliente clienteExistente = clienteService.getClienteById(id_cliente);
             if (clienteExistente == null) {
