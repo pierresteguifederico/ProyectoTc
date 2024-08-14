@@ -49,8 +49,6 @@
             <label for="apellido_id">Apellido:</label>
             <input type="text" id="apellido_id" name="apellido_id" required><br>
             <label for="dni_id">DNI:</label>
-            <input type="text" id="dni_id" name="dni_id" required><br>
-            <label for="venta_id">ID de Venta:</label>
             <input type="number" id="venta_id" name="venta_id" required><br>
             <button type="submit">Agregar Cliente</button>
         </form>
@@ -66,8 +64,7 @@
                     nombre: document.getElementById('nombre_id').value,
                     apellido: document.getElementById('apellido_id').value,
                     dni: document.getElementById('dni_id').value,
-                    // El ID de venta no se envía al backend en este caso.
-                    // Solo se asocia el cliente con una venta en la lógica del backend.
+                    
                 };
 
                 try {

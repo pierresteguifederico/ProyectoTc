@@ -40,8 +40,8 @@ public class ClienteController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @DeleteMapping ("/eliminar/{id_cliente}")
-    public void eliminarCliente(@PathVariable Long id){
-        clienteService.deleteCliente(id);
+    public void eliminarCliente(@PathVariable Long id_cliente){
+        clienteService.deleteCliente(id_cliente);
 
     }
     @PutMapping("/editar/{codigo_producto}")
