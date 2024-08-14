@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Producto</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
+    <style>
+        body { 
+            font: bold italic 15px Verdana;
+        }
+        h1 {
+            text-align: center;
+        }
+        #productos {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .producto {
+            display: block;
+            margin: 10px auto;
+            background-color: #ddd;
+            text-align: center;
+            height: 150px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa; 
+        }
+        .producto h2 {
+            font-size: 20px;
+            margin: 5px;
+        }
+        .producto p {
+            color: #555;
+            font-size: 15px;
+            margin: 15px;
+        }
+        #buscar-container {
+            text-align: center;
+            margin: 20px;
+        }
+        #buscar-container input {
+            padding: 10px;
+            font-size: 15px;
+        }
+        #buscar-container button {
+            padding: 10px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar Producto</h1>
+    <div id="buscar-container">
+        <input type="text" id="producto-id" placeholder="Ingrese ID del producto">
+        <button id="buscar-btn">Buscar</button>
+    </div>
+    <div id="productos"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buscarBtn = document.getElementById('buscar-btn');
+            buscarBtn.addEventListener('click', () => {
+                const productoId = document.getElementById('producto-id').value;
+                if (productoId) {
+                    fetchProducto(productoId);
+                } else {
+                    alert('Por favor, ingrese un ID de producto.');
+                }
+            });
+
+            function fetchProducto(id) {
+                fetch(`https://proyectotc.onrender.com/productos/id/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const productosContainer = document.getElementById('productos');
+                        productosContainer.innerHTML = '';
+                        if (data) {
+                            const productoDiv = document.createElement('div');
+                            productoDiv.classList.add('producto');
+                            const safeHTML = DOMPurify.sanitize(`
+                                <h2>Nombre: ${data.nombre}</h2>
+                                <p>Marca: ${data.marca}</p>
+                                <p><strong>Precio: $${data.precio.toFixed(2)}</strong></p>
+                                <h5>Stock: ${data.stock}</h5>
+                                <h6>Código: ${data.codigo_producto}</h6>
+                            `);
+                            productoDiv.innerHTML = safeHTML;
+                            productosContainer.appendChild(productoDiv);
+                        } else {
+                            productosContainer.innerHTML = '<p>Producto no encontrado.</p>';
+                        }
+                    })
+                    .catch(error => alert('Error al obtener el producto'));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Venta</title>
+</head>
+<style>
+    body {
+        font: bold italic 15px Verdana;
+    }
+    h1 {
+        text-align: center;
+    }
+    #formulario {
+        background-color: #ddd;
+        text-align: center;
+        height: auto;
+        width: 300px;
+        margin: 60px auto;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 10px -10px 20px #aaa;
+    }
+    #formulario label {
+        display: block;
+        margin: 10px;
+    }
+    #formulario input {
+        border: none;
+        border-radius: 5px;
+        width: 300px;
+    }
+    #formulario button {
+        font-weight: bold;
+        border: 1px solid #FFFFFF;
+        border-radius: 5px;
+        width: 60%;
+        margin: 20px;
+        padding: 5px 10px;
+    }
+</style>
+<body>
+<div id="formulario">
+    <h1>Crear Venta</h1>
+    <form id="venta_formulario">
+        <label for="cliente_id">Cliente:</label>
+        <input type="text" id="cliente_id" name="cliente_id" required><br>
+        <label for="fecha_id">Fecha:</label>
+        <input type="date" id="fecha_id" name="fecha_id" required><br>
+        <label for="productos_id">Productos (IDs separados por coma):</label>
+        <input type="text" id="productos_id" name="productos_id" required><br>
+        <button type="submit">Agregar Venta</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ventaForm = document.getElementById('venta_formulario');
+
+        ventaForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const nuevaVenta = {
+                cliente: document.getElementById('cliente_id').value,
+                fecha: document.getElementById('fecha_id').value,
+                productos: document.getElementById('productos_id').value.split(',').map(id => parseInt(id.trim())),
+            };
+
+            try {
+                await fetch('http://localhost:8080/ventas/crear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nuevaVenta)
+                });
+                alert("Venta creada con éxito");
+                ventaForm.reset();
+            } catch (error) {
+                alert("Error al crear la venta");
+            }
+        });
+    });
+</script>
+</body>
+</html>
