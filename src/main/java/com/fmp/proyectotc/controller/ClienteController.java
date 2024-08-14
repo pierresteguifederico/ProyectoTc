@@ -44,7 +44,7 @@ public class ClienteController {
         clienteService.deleteCliente(id_cliente);
 
     }
-    @PutMapping("/editar/{codigo_producto}")
+    @PutMapping("/editar/{id_cliente}")
     public ResponseEntity<Object> modificarProducto(@PathVariable Long id_cliente, @RequestBody Cliente cliente) {
         try {
             Cliente clienteExistente = clienteService.getClienteById(id_cliente);
