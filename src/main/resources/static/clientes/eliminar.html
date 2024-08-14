@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Cliente</title>
+    <style> 
+        body {
+            font: bold italic 15px Verdana;
+        }       
+        h1 {
+            text-align: center;
+        }
+        #formulario {
+            background-color: #ddd;
+            text-align: center;
+            height: 400px;
+            width: 300px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa; 
+        }
+        #formulario label {
+            display: block;
+            margin: 10px;
+        }
+        #formulario input {
+            border: none;   
+            border-radius: 5px;
+            width: 300px;
+        }    
+        #formulario button {
+            font-weight: bold;
+            border: 1px solid #FFFFFF;
+            border-radius: 5px;
+            width: 30%; 
+            margin: 20px;
+            padding: 5px 10px;    
+        }    
+    </style>
+</head>
+<body>
+    <div id="formulario">      
+        <h1>Eliminar Cliente</h1>
+        <form id="delete-form">
+            <label for="cliente_id">Código Cliente:</label>
+            <input type="text" id="cliente_id" name="cliente_id"><br>
+            <button type="submit">Eliminar Cliente</button>
+        </form>
+    </div> 
+    <script>
+        document.getElementById('delete-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const clienteId = document.getElementById('cliente_id').value;
+            if (!clienteId) {
+                alert('Por favor, ingrese un código de cliente.');
+                return;
+            }
+
+            try {
+                // Verificar si el cliente existe antes de eliminarlo
+                const checkResponse = await fetch(`https://proyectotc.onrender.com/clientes/id/${clienteId}`);
+                if (!checkResponse.ok) {
+                    if (checkResponse.status === 404) {
+                        alert('Cliente no encontrado.');
+                        return;
+                    } else {
+                        alert('Error al verificar el cliente.');
+                        return;
+                    }
+                }
+
+                // Si el cliente existe, proceder a eliminarlo
+                const deleteResponse = await fetch(`https://proyectotc.onrender.com/clientes/eliminar/${clienteId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (deleteResponse.ok) {
+                    alert('Cliente eliminado exitosamente.');
+                } else {
+                    alert('Error al eliminar el cliente.');
+                }
+            } catch (error) {
+                alert('Error en la conexión con el servidor.');
+            }
+        });
+    </script>
+</body>
+</html>

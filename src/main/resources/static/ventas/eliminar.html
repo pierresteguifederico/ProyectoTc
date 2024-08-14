@@ -61,7 +61,7 @@
 
     try {
         // Verificar si la venta existe antes de eliminarla
-        const checkResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${id}`);
+        const checkResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${ventaId}`);
         if (!checkResponse.ok) {
             if (checkResponse.status === 404) {
                 alert('Venta no encontrada.');
@@ -73,7 +73,7 @@
         }
 
         // Si la venta existe, proceder a eliminarla
-        const deleteResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${id}`, {
+        const deleteResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${ventaId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

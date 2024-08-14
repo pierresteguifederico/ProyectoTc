@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Cliente</title>
+    <style> 
+        body {
+            font: bold italic 15px Verdana;
+        }       
+        h1 {
+            text-align: center;
+        }
+        #formulario {
+            background-color: #ddd;
+            text-align: center;
+            height: 450px;
+            width: 300px;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 20px #aaa; 
+        }
+        #formulario label {
+            display: block;
+            margin: 10px;
+        }
+        #formulario input {
+            border: none;   
+            border-radius: 5px;
+            width: 300px;
+        }    
+        #formulario button {
+            font-weight: bold;
+            border: 1px solid #FFFFFF;
+            border-radius: 5px;
+            width: 60%; 
+            margin: 20px;
+            padding: 5px 10px;    
+        }    
+    </style>
+</head>
+<body>
+    <div id="formulario">      
+        <h1>Modificar Cliente</h1>
+        <form id="cliente_formulario">
+            <label for="cliente_id">ID del Cliente:</label>
+            <input type="text" id="cliente_id" name="cliente_id" required><br>
+            <label for="nombre_id">Nombre:</label>
+            <input type="text" id="nombre_id" name="nombre_id" required><br>
+            <label for="apellido_id">Apellido:</label>
+            <input type="text" id="apellido_id" name="apellido_id" required><br>
+            <label for="dni_id">DNI:</label>
+            <input type="text" id="dni_id" name="dni_id" required><br>
+            <button type="submit">Modificar Cliente</button>
+        </form>
+    </div> 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const clienteForm = document.getElementById('cliente_formulario');
+
+            clienteForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const clienteId = document.getElementById('cliente_id').value;
+                const actualizadoCliente = {
+                    nombre: document.getElementById('nombre_id').value,
+                    apellido: document.getElementById('apellido_id').value,
+                    dni: document.getElementById('dni_id').value
+                };
+
+                if (!clienteId) {
+                    alert('Por favor, ingrese el ID del cliente.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`https://proyectotc.onrender.com/clientes/editar/${clienteId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(actualizadoCliente)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta de la red');
+                    }
+
+                    alert("Cliente modificado con éxito");
+                    clienteForm.reset();
+                } catch (error) {
+                    alert("Error al modificar el cliente: " + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

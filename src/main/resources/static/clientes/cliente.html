@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Venta</title>
+    <title>Buscar Cliente</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
     <style>
         body { 
@@ -12,26 +12,26 @@
         h1 {
             text-align: center;
         }
-        #ventas {
+        #clientes {
             width: 100%;
             box-sizing: border-box;
         }
-        .venta {
+        .cliente {
             display: block;
             margin: 10px auto;
             background-color: #ddd;
             text-align: center;
-            height: auto;
+            height: 200px;
             width: 90%;
             padding: 20px;
             border-radius: 20px;
             box-shadow: 10px -10px 20px #aaa; 
         }
-        .venta h2 {
+        .cliente h2 {
             font-size: 20px;
             margin: 5px;
         }
-        .venta p {
+        .cliente p {
             color: #555;
             font-size: 15px;
             margin: 15px;
@@ -51,46 +51,47 @@
     </style>
 </head>
 <body>
-    <h1>Buscar Venta</h1>
+    <h1>Buscar Cliente</h1>
     <div id="buscar-container">
-        <input type="text" id="venta-id" placeholder="Ingrese ID de la venta">
+        <input type="text" id="cliente-id" placeholder="Ingrese ID del cliente">
         <button id="buscar-btn">Buscar</button>
     </div>
-    <div id="ventas"></div>
+    <div id="clientes"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const buscarBtn = document.getElementById('buscar-btn');
             buscarBtn.addEventListener('click', () => {
-                const ventaId = document.getElementById('venta-id').value;
-                if (ventaId) {
-                    fetchVenta(ventaId);
+                const clienteId = document.getElementById('cliente-id').value;
+                if (clienteId) {
+                    fetchCliente(clienteId);
                 } else {
-                    alert('Por favor, ingrese un ID de venta.');
+                    alert('Por favor, ingrese un ID de cliente.');
                 }
             });
 
-            function fetchVenta(id) {
-                fetch(`https://proyectotc.onrender.com/ventas/id/${id}`)
+            function fetchCliente(id) {
+                fetch(`https://proyectotc.onrender.com/clientes/id/${id}`)
                     .then(response => response.json())
                     .then(data => {
-                        const ventasContainer = document.getElementById('ventas');
-                        ventasContainer.innerHTML = '';
+                        const clientesContainer = document.getElementById('clientes');
+                        clientesContainer.innerHTML = '';
                         if (data) {
-                            const ventaDiv = document.createElement('div');
-                            ventaDiv.classList.add('venta');
+                            const clienteDiv = document.createElement('div');
+                            clienteDiv.classList.add('cliente');
                             const safeHTML = DOMPurify.sanitize(`
-                                <h2>Fecha: ${data.fecha}</h2>
-                                <p>Cliente ID: ${data.cliente ? data.cliente.id_cliente : 'Desconocido'}</p>
-                                <p>Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
+                                <h2>Nombre: ${data.nombre} ${data.apellido}</h2>
+                                <p>DNI: ${data.dni}</p>
+                                <h5>Código Cliente: ${data.id_cliente}</h5>
+                                <p><strong>Total Ventas: ${data.ventas.length}</strong></p>
                             `);
-                            ventaDiv.innerHTML = safeHTML;
-                            ventasContainer.appendChild(ventaDiv);
+                            clienteDiv.innerHTML = safeHTML;
+                            clientesContainer.appendChild(clienteDiv);
                         } else {
-                            ventasContainer.innerHTML = '<p>Venta no encontrada.</p>';
+                            clientesContainer.innerHTML = '<p>Cliente no encontrado.</p>';
                         }
                     })
-                    .catch(error => alert('Error al obtener la venta'));
+                    .catch(error => alert('Error al obtener el cliente'));
             }
         });
     </script>
