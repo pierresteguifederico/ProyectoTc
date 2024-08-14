@@ -63,7 +63,7 @@
                 const nuevaVenta = {
                     cliente: { id_cliente: document.getElementById('cliente_id').value },
                     fecha: document.getElementById('fecha_id').value,
-                    productos: document.getElementById('productos_id').value.split(',').map(id => ({ id_producto: parseInt(id.trim()) }))
+                    productos: document.getElementById('productos_id').value.split(',').map(id => ({ codigo_producto: parseInt(id.trim()) }))
                 };
 
                 try {
