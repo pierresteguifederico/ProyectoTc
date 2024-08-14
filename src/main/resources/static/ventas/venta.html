@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Producto</title>
+    <title>Buscar Venta</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.17/purify.min.js"></script>
     <style>
         body { 
@@ -12,26 +12,26 @@
         h1 {
             text-align: center;
         }
-        #productos {
+        #ventas {
             width: 100%;
             box-sizing: border-box;
         }
-        .producto {
+        .venta {
             display: block;
             margin: 10px auto;
             background-color: #ddd;
             text-align: center;
-            height: 150px;
+            height: auto;
             width: 90%;
-            padding: 40px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 10px -10px 20px #aaa; 
         }
-        .producto h2 {
+        .venta h2 {
             font-size: 20px;
             margin: 5px;
         }
-        .producto p {
+        .venta p {
             color: #555;
             font-size: 15px;
             margin: 15px;
@@ -51,48 +51,47 @@
     </style>
 </head>
 <body>
-    <h1>Buscar Producto</h1>
+    <h1>Buscar Venta</h1>
     <div id="buscar-container">
-        <input type="text" id="producto-id" placeholder="Ingrese ID del producto">
+        <input type="text" id="venta-id" placeholder="Ingrese ID de la venta">
         <button id="buscar-btn">Buscar</button>
     </div>
-    <div id="productos"></div>
+    <div id="ventas"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const buscarBtn = document.getElementById('buscar-btn');
             buscarBtn.addEventListener('click', () => {
-                const productoId = document.getElementById('producto-id').value;
-                if (productoId) {
-                    fetchProducto(productoId);
+                const ventaId = document.getElementById('venta-id').value;
+                if (ventaId) {
+                    fetchVenta(ventaId);
                 } else {
-                    alert('Por favor, ingrese un ID de producto.');
+                    alert('Por favor, ingrese un ID de venta.');
                 }
             });
 
-            function fetchProducto(id) {
-                fetch(`https://proyectotc.onrender.com/productos/id/${id}`)
+            function fetchVenta(id) {
+                fetch(`https://proyectotc.onrender.com/ventas/id/${id_venta}`)
                     .then(response => response.json())
                     .then(data => {
-                        const productosContainer = document.getElementById('productos');
-                        productosContainer.innerHTML = '';
+                        const ventasContainer = document.getElementById('ventas');
+                        ventasContainer.innerHTML = '';
                         if (data) {
-                            const productoDiv = document.createElement('div');
-                            productoDiv.classList.add('producto');
+                            const ventaDiv = document.createElement('div');
+                            ventaDiv.classList.add('venta');
                             const safeHTML = DOMPurify.sanitize(`
-                                <h2>Nombre: ${data.nombre}</h2>
-                                <p>Marca: ${data.marca}</p>
-                                <p><strong>Precio: $${data.precio.toFixed(2)}</strong></p>
-                                <h5>Stock: ${data.stock}</h5>
-                                <h6>Código: ${data.codigo_producto}</h6>
+                                <h2>Fecha: ${data.fecha}</h2>
+                                <p>Total: $${data.total.toFixed(2)}</p>
+                                <p>Cliente ID: ${data.cliente ? data.cliente.id_cliente : 'Desconocido'}</p>
+                                <p>Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
                             `);
-                            productoDiv.innerHTML = safeHTML;
-                            productosContainer.appendChild(productoDiv);
+                            ventaDiv.innerHTML = safeHTML;
+                            ventasContainer.appendChild(ventaDiv);
                         } else {
-                            productosContainer.innerHTML = '<p>Producto no encontrado.</p>';
+                            ventasContainer.innerHTML = '<p>Venta no encontrada.</p>';
                         }
                     })
-                    .catch(error => alert('Error al obtener el producto'));
+                    .catch(error => alert('Error al obtener la venta'));
             }
         });
     </script>

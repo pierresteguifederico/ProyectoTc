@@ -62,7 +62,7 @@ function fetchVentas() {
                     const safeHTML = DOMPurify.sanitize( `
                         <h2>Fecha: ${venta.fecha}</h2>
                         <p>Cliente ID: ${venta.cliente ? venta.cliente.id_cliente : 'Desconocido'}</p>
-                        <p>Productos: ${venta.productos.map(p => p.id_producto).join(', ')}</p>
+                        <p>Productos: ${venta.productos.map(p => p.codigo_producto).join(', ')}</p>
                             `);
                 ventaDiv.innerHTML = safeHTML;
                 ventasContainer.appendChild(ventaDiv)
