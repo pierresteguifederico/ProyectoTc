@@ -16,7 +16,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public Cliente saveCliente(Cliente cliente) throws Exception{
+    public Cliente saveCliente(Cliente cliente){
         return clienteRepository.save(cliente);
     }
 

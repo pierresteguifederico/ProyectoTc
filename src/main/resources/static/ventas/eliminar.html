@@ -61,7 +61,7 @@
 
     try {
         // Verificar si la venta existe antes de eliminarla
-        const checkResponse = await fetch(`https://proyectotc.onrender.com/ventas/eliminar/${ventaId}`);
+        const checkResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${ventaId}`);
         if (!checkResponse.ok) {
             if (checkResponse.status === 404) {
                 alert('Venta no encontrada.');

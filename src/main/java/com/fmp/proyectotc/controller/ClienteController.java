@@ -49,9 +49,8 @@ public class ClienteController {
         try {
             Cliente clienteExistente = clienteService.getClienteById(id_cliente);
             if (clienteExistente == null) {
-                return new ResponseEntity<>("Producto no encontrado", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
             }
-            cliente.setId_cliente(id_cliente);
             clienteService.saveCliente(cliente);
             return new ResponseEntity<>(cliente, HttpStatus.OK);
         } catch (Exception e) {

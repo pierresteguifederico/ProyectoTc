@@ -50,7 +50,6 @@ public class VentaController {
             if (ventaExistente == null) {
                 return new ResponseEntity<>("Venta no encontrada", HttpStatus.NOT_FOUND);
             }
-            venta.setId_venta(id_venta);
             ventaService.saveVenta(venta);
             return new ResponseEntity<>(venta, HttpStatus.OK);
         } catch (Exception e) {

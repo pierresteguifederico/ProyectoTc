@@ -53,7 +53,6 @@ public class ProductoController {
             if (productoExistente == null) {
                 return new ResponseEntity<>("Producto no encontrado", HttpStatus.NOT_FOUND);
             }
-            producto.setCodigo_producto(codigo_producto);
             productoService.saveProducto(producto);
             return new ResponseEntity<>(producto, HttpStatus.OK);
         } catch (Exception e) {
