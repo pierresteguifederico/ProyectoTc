@@ -73,7 +73,7 @@
         }
 
         // Si la venta existe, proceder a eliminarla
-        const deleteResponse = await fetch(`https://proyectotc.onrender.com/ventas/id/${ventaId}`, {
+        const deleteResponse = await fetch(`https://proyectotc.onrender.com/ventas/eliminar/${ventaId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

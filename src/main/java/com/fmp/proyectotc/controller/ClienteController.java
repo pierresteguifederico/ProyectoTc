@@ -2,6 +2,7 @@ package com.fmp.proyectotc.controller;
 
 import com.fmp.proyectotc.model.Cliente;
 import com.fmp.proyectotc.service.ClienteService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +52,8 @@ public class ClienteController {
             if (clienteExistente == null) {
                 return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
             }
-            clienteService.saveCliente(cliente);
+            BeanUtils.copyProperties(cliente, clienteExistente, "id_cliente");
+            clienteService.saveCliente(clienteExistente);
             return new ResponseEntity<>(cliente, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);

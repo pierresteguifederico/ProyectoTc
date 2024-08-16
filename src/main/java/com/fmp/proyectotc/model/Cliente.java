@@ -15,7 +15,7 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String dni;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cliente")
     @JsonIgnore
     private List<Venta> ventas;}
 

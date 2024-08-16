@@ -2,6 +2,7 @@ package com.fmp.proyectotc.controller;
 
 import com.fmp.proyectotc.model.Venta;
 import com.fmp.proyectotc.service.VentaService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,8 @@ public class VentaController {
             if (ventaExistente == null) {
                 return new ResponseEntity<>("Venta no encontrada", HttpStatus.NOT_FOUND);
             }
-            ventaService.saveVenta(venta);
+            BeanUtils.copyProperties(venta, ventaExistente,"id_venta");
+            ventaService.updateVenta(id_venta,ventaExistente);
             return new ResponseEntity<>(venta, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);

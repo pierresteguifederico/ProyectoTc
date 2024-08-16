@@ -8,5 +8,5 @@ public interface VentaService {
     void deleteVenta(Long id);
     Venta getVentaById(Long id);
     List<Venta> getAllVentas();
-
+    Venta updateVenta(Long id_venta, Venta nuevaVenta);
 }

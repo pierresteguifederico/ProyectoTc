@@ -2,6 +2,7 @@ package com.fmp.proyectotc.controller;
 
 import com.fmp.proyectotc.model.Producto;
 import com.fmp.proyectotc.service.ProductoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class ProductoController {
             return new ResponseEntity<>(producto, HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    }
     @PutMapping("/editar/{codigo_producto}")
     public ResponseEntity<Object> modificarProducto(@PathVariable Long codigo_producto, @RequestBody Producto producto) {
         try {
@@ -53,7 +54,9 @@ public class ProductoController {
             if (productoExistente == null) {
                 return new ResponseEntity<>("Producto no encontrado", HttpStatus.NOT_FOUND);
             }
-            productoService.saveProducto(producto);
+            BeanUtils.copyProperties(producto, productoExistente, "codigo_producto");
+
+            productoService.saveProducto(productoExistente);
             return new ResponseEntity<>(producto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);

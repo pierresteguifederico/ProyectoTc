@@ -20,7 +20,6 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.save(producto);
     }
 
-
     @Override
     @Transactional
     public void deleteProducto(Long codigo_producto) {
