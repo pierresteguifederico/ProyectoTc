@@ -48,10 +48,26 @@
             padding: 10px;
             font-size: 15px;
         }
+        #volverIndice {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #FFFFFF;}
+    #volverIndice:hover {
+                transition: box-shadow 0.3s ease;
+                box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
+        }
     </style>
 </head>
 <body>
     <h1>Buscar Producto</h1>
+    <a id="volverIndice" href="https://proyectotc.onrender.com">Volver al Índice</a>
+
     <div id="buscar-container">
         <input type="text" id="producto-id" placeholder="Ingrese ID del producto">
         <button id="buscar-btn">Buscar</button>

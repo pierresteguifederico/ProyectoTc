@@ -1,6 +1,7 @@
 package com.fmp.proyectotc.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_venta;
+    @NotNull(message = "La fecha no puede ser nula")
     private LocalDate fecha;
     private Double total;
     @ManyToOne

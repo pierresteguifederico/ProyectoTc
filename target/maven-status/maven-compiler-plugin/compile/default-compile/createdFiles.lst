@@ -1,9 +1,11 @@
 com\fmp\proyectotc\repository\ClienteRepository.class
 com\fmp\proyectotc\ProyectotcApplication.class
 com\fmp\proyectotc\service\ProductoServiceImpl.class
+com\fmp\proyectotc\WebConfig\WebConfig$1.class
 com\fmp\proyectotc\repository\VentaRepository.class
 com\fmp\proyectotc\service\ClienteService.class
 com\fmp\proyectotc\service\ClienteServiceImpl.class
+com\fmp\proyectotc\WebConfig\WebConfig.class
 com\fmp\proyectotc\controller\ClienteController.class
 com\fmp\proyectotc\model\Venta.class
 com\fmp\proyectotc\service\ProductoService.class

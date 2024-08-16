@@ -34,15 +34,35 @@
             font-weight: bold;
             border: 1px solid #FFFFFF;
             border-radius: 5px;
-            width: 60%;
+            width: 60%; 
             margin: 20px;
+            padding: 5px 10px;    
+        }    
+        #formulario button:hover{
+       transition: box-shadow 0.3s ease;  
+       box-shadow: 0 0 10px rgba(44, 44, 45, 0.5);
+    }   
+         
+    #volverIndice {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ddd;
             padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #FFFFFF;}
+    #volverIndice:hover {
+                transition: box-shadow 0.3s ease;
+                box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
         }
     </style>
 </head>
 <body>
     <div id="formulario">
         <h1>Crear Venta</h1>
+        <a id="volverIndice" href="https://proyectotc.onrender.com">Volver al Índice</a>
         <form id="venta_formulario">
             <label for="cliente_id">Cliente:</label>
             <input type="text" id="cliente_id" name="cliente_id" required><br>
