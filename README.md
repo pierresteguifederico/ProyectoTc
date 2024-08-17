@@ -14,7 +14,7 @@ La aplicación permite:
 
 - **Backend**: Java, Spring Boot, JPA/Hibernate
 - **Frontend**: HTML, CSS, JavaScript
-- **Base de Datos**: MYSQL (para pruebas) y PostgreSQL en poducción
+- **Base de Datos**: MYSQL (para pruebas) y PostgreSQL en producción
 - **Herramientas**: Maven, Lombok, Postman
 
 ## Estructura del Proyecto
