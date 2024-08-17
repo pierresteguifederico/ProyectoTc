@@ -2,6 +2,10 @@
 
 Este proyecto es una aplicación que consta de una API para gestionar productos, ventas y clientes, junto con páginas estáticas para consumir dicha API. El desarrollo incluye tanto el backend como el frontend, y se han implementado funcionalidades completas para la administración de datos y la interacción del usuario.
 
+## Página Principal
+
+**https://proyectotc.onrender.com**
+
 ## Descripción
 
 La aplicación permite:
