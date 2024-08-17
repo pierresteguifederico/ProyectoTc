@@ -1,6 +1,6 @@
 # Proyecto de Gestión de Productos, Ventas y Clientes
 
-Este proyecto es una aplicación que consta de una API para gestionar productos, ventas y clientes, junto con páginas estáticas para consumir dicha API. El desarrollo incluye tanto el backend como el frontend, y se han implementado funcionalidades completas para la administración de datos y la interacción del usuario. Si bien la tarea de backend finaliza al desarrollar los endpoint y la lógica de negocio me pareció interesante utilizar herramienta como html css y js sin librerias para comprender la implementación y la ejecución del programa en su totalidad.
+Este proyecto es una aplicación que consta de una API para gestionar productos, ventas y clientes, junto con páginas estáticas para consumir dicha API. El desarrollo incluye tanto el backend como el frontend, y se han implementado funcionalidades completas para la administración de datos y la interacción del usuario. Si bien la tarea de backend finaliza al desarrollar los endpoint y la lógica de negocio (entre otras cosas) me pareció interesante utilizar herramienta como html css y js sin librerias para comprender la implementación y la ejecución del programa en su totalidad.
 
 ## Página Principal
 
