@@ -57,6 +57,20 @@ public class VentaServiceImpl implements VentaService {
     @Override
     @Transactional
     public void deleteVenta(Long id_venta) {
+        Venta venta = ventaRepository.findById(id_venta)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+
+        for (Producto producto : venta.getProductos()) {
+            Long productoId = producto.getCodigo_producto();
+            int cantidadVendida = productoCantidad.getOrDefault(productoId, 0);
+            Producto prod = productoService.getProductoById(productoId);
+
+            if (prod != null) {
+                prod.setStock(prod.getStock() + cantidadVendida);
+                productoService.saveProducto(prod);
+                productoCantidad.clear();
+            }
+        }
         ventaRepository.deleteById(id_venta);
     }
 

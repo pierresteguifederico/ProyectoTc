@@ -25,7 +25,7 @@ public class Producto {
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor que 0")
     private Double precio;
     @NotNull
-    @Min(value = 1, message = "El stock debe ser mayor o igual a 1")
+    @Min(value = 0, message = "El stock debe ser mayor o igual a 0")
     private Integer stock;
     @ManyToMany(mappedBy = "productos")
     @JsonIgnore

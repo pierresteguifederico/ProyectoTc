@@ -102,12 +102,11 @@
         if (deleteResponse.ok) {
             alert('Producto eliminado exitosamente.');
             productoForm.reset();
-            return;
+            
         } else {
             alert('Error al eliminar el producto.');
         }
     } catch (error) {
-        alert('Error en la conexión con el servidor.');
     }
 });
 

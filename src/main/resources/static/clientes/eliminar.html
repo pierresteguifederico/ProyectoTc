@@ -104,12 +104,10 @@
                 if (deleteResponse.ok) {
                     alert('Cliente eliminado exitosamente.');
                     productoForm.reset();
-                    return;
                 } else {
                     alert('Error al eliminar el cliente.');
                 }
             } catch (error) {
-                alert('Error en la conexión con el servidor.');
             }
         });
     </script>
