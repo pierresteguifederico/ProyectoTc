@@ -79,7 +79,7 @@
             fetchVentas();
 
             function fetchVentas() {
-                fetch(`https://proyectotc.onrender.com/ventas/id/${id}`)
+                fetch(`https://proyectotc.onrender.com/ventas`)
                     .then(response => response.json())
                     .then(data => {
                         const ventasContainer = document.getElementById('ventas');
@@ -90,9 +90,9 @@
                             const fechaDMA = new Date(venta.fecha).toLocaleDateString('es-ES');
                             const safeHTML = DOMPurify.sanitize(`
                                 <h2>Fecha: ${fechaDMA}</h2>
-                                <h3><strong> Total: ${venta.total}</strong></h3>
+                                <h3><strong> Total: $${venta.total}</strong></h3>
                                 <p>Cliente ID: ${venta.cliente ? venta.cliente.id_cliente : 'Desconocido'}</p>
-                                <p>Productos: ${venta.productos.map(p => p.codigo_producto).join(', ')}</p>
+                                <p>ID Productos: ${venta.productos.map(p => p.codigo_producto).join(', ')}</p>
                             `);
                             ventaDiv.innerHTML = safeHTML;
                             ventasContainer.appendChild(ventaDiv);

@@ -74,7 +74,8 @@
                             const clienteDiv = document.createElement('div');
                             clienteDiv.classList.add('cliente');
                             const safeHTML = DOMPurify.sanitize(`
-                                <h2>Nombre: ${cliente.nombre} ${cliente.apellido}</h2>
+                                <h2>Nombre: ${cliente.nombre} </h2>
+                                <h2>Apellido: ${cliente.apellido}</h2>
                                 <p>DNI: ${cliente.dni}</p>
                                 <h5>Código Cliente: ${cliente.id_cliente}</h5>                            `);
                             clienteDiv.innerHTML = safeHTML;

@@ -92,7 +92,7 @@
             });
 
             function fetchCliente(id) {
-                fetch(`http://proyectotc.onrender.com/clientes/id/${id}`)
+                fetch(`https://proyectotc.onrender.com/clientes/id/${id}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Cliente no encontrado o error en la solicitud');

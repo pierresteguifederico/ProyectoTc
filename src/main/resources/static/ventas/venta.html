@@ -79,10 +79,12 @@
                         if (data) {
                             const ventaDiv = document.createElement('div');
                             ventaDiv.classList.add('venta');
+                            const fechaDMA = new Date(data.fecha).toLocaleDateString('es-ES');
                             const safeHTML = DOMPurify.sanitize(`
-                                <h2>Fecha: ${data.fecha}</h2>
+                                <h2>Fecha: ${fechaDMA}</h2>
+                                <h3><strong> Total: $${data.total}</strong></h3>
                                 <p>Cliente ID: ${data.cliente ? data.cliente.id_cliente : 'Desconocido'}</p>
-                                <p>Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
+                                <p>ID Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
                             `);
                             ventaDiv.innerHTML = safeHTML;
                             ventasContainer.appendChild(ventaDiv);
