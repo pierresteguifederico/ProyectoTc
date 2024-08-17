@@ -32,21 +32,24 @@ El backend está desarrollado en Java utilizando Spring Boot. Incluye:
 - **Endpoints RESTful**: Se han creado puntos de acceso para que la aplicación pueda agregar, modificar, eliminar y consultar productos, clientes y ventas de manera eficiente.
 
 **Endpoints Backend**
-Clientes
+
+***Clientes***
 
 - Listar: GET https://proyectotc.onrender.com/clientes
 - Crear: POST https://proyectotc.onrender.com/clientes/crear
 - Obtener por ID: GET https://proyectotc.onrender.com/clientes/id/{id_cliente}
 - Eliminar: DELETE https://proyectotc.onrender.com/clientes/eliminar/{id_cliente}
 - Editar: PUT https://proyectotc.onrender.com/clientes/editar/{id_cliente}
-Productos
+
+***Productos***
 
 - Listar: GET https://proyectotc.onrender.com/productos
 - Crear: POST https://proyectotc.onrender.com/productos/crear
 - Obtener por ID: GET https://proyectotc.onrender.com/productos/id/{codigo_producto}
 - Eliminar: DELETE https://proyectotc.onrender.com/productos/eliminar/{codigo_producto}
 - Editar: PUT https://proyectotc.onrender.com/productos/editar/{codigo_producto}
-Ventas
+
+***Ventas***
 
 - Listar: GET https://proyectotc.onrender.com/ventas
 - Crear: POST https://proyectotc.onrender.com/ventas/crear
