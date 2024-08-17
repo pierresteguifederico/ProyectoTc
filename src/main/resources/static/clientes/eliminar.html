@@ -104,6 +104,7 @@
                 if (deleteResponse.ok) {
                     alert('Cliente eliminado exitosamente.');
                     productoForm.reset();
+                    return;
                 } else {
                     alert('Error al eliminar el cliente.');
                 }

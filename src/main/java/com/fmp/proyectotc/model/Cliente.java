@@ -21,7 +21,7 @@ public class Cliente {
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "El apellido debe contener solo letras y espacios")
     private String apellido;
     @NotBlank(message = "El DNI no puede estar vacío")
-    @Pattern(regexp = "^[0-9]$", message = "El DNI tiene que contener solo numeros")
+    @Pattern(regexp = "^[0-9]{7,10}$", message = "El DNI tiene que contener solo numeros")
     private String dni;
     @OneToMany(mappedBy = "cliente")
     @JsonIgnore

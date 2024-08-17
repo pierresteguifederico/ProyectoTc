@@ -85,6 +85,8 @@
                                 <h3><strong> Total: $${data.total}</strong></h3>
                                 <p>Cliente ID: ${data.cliente ? data.cliente.id_cliente : 'Desconocido'}</p>
                                 <p>ID Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
+                                <h4> Venta ID: ${data.id_venta}</h4>
+
                             `);
                             ventaDiv.innerHTML = safeHTML;
                             ventasContainer.appendChild(ventaDiv);

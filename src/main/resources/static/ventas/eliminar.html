@@ -103,6 +103,7 @@
 
         if (deleteResponse.ok) {
             alert('Venta eliminada exitosamente.');
+            document.getElementById('delete-form').reset();
         } else {
             alert('Error al eliminar la venta.');
         }

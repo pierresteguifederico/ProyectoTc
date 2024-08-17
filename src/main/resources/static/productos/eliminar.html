@@ -102,6 +102,7 @@
         if (deleteResponse.ok) {
             alert('Producto eliminado exitosamente.');
             productoForm.reset();
+            return;
         } else {
             alert('Error al eliminar el producto.');
         }
