@@ -27,9 +27,8 @@ public class Producto {
     @NotNull
     @Min(value = 0, message = "El stock debe ser mayor o igual a 0")
     private Integer stock;
-    @ManyToMany(mappedBy = "productos")
+    @OneToMany(mappedBy = "producto")
     @JsonIgnore
-    private List<Venta> ventas;
-
+    private List<DetalleVenta> detallesVenta;
 
 }

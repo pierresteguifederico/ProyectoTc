@@ -12,9 +12,22 @@
         h1 {
             text-align: center;
         }
+        #buscar-container {
+            text-align: center;
+            margin: 20px;
+        }
+        #buscar-container input {
+            padding: 10px;
+            font-size: 15px;
+        }
+        #buscar-container button {
+            padding: 10px;
+            font-size: 15px;
+        }
         #ventas {
             width: 100%;
             box-sizing: border-box;
+            text-align: center;
         }
         .venta {
             display: block;
@@ -36,24 +49,29 @@
             font-size: 15px;
             margin: 15px;
         }
-        #buscar-container {
-            text-align: center;
-            margin: 20px;
+        #volverIndice {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #FFFFFF;
         }
-        #buscar-container input {
-            padding: 10px;
-            font-size: 15px;
-        }
-        #buscar-container button {
-            padding: 10px;
-            font-size: 15px;
+        #volverIndice:hover {
+            transition: box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
         }
     </style>
 </head>
 <body>
     <h1>Buscar Venta</h1>
+    <a id="volverIndice" href="https://proyectotc.onrender.com">Volver al Índice</a>
+
     <div id="buscar-container">
-        <input type="text" id="venta-id" placeholder="Ingrese ID de la venta">
+        <input type="number" id="venta-id" placeholder="Ingrese ID de la venta">
         <button id="buscar-btn">Buscar</button>
     </div>
     <div id="ventas"></div>
@@ -80,13 +98,15 @@
                             const ventaDiv = document.createElement('div');
                             ventaDiv.classList.add('venta');
                             const fechaDMA = new Date(data.fecha).toLocaleDateString('es-ES');
+                            const detalles = data.detallesVenta.map(detalle => 
+                                `Producto ID: ${detalle.producto.codigo_producto}, Cantidad: ${detalle.cantidad}`
+                            ).join('<br>');
                             const safeHTML = DOMPurify.sanitize(`
                                 <h2>Fecha: ${fechaDMA}</h2>
-                                <h3><strong> Total: $${data.total}</strong></h3>
+                                <h3><strong>Total: $${data.total.toFixed(2)}</strong></h3>
                                 <p>Cliente ID: ${data.cliente ? data.cliente.id_cliente : 'Desconocido'}</p>
-                                <p>ID Productos: ${data.productos.map(p => p.codigo_producto).join(', ')}</p>
-                                <h4> Venta ID: ${data.id_venta}</h4>
-
+                                <p>Detalles de la Venta:<br>${detalles}</p>
+                                <h4>Venta ID: ${data.id_venta}</h4>
                             `);
                             ventaDiv.innerHTML = safeHTML;
                             ventasContainer.appendChild(ventaDiv);

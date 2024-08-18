@@ -1,5 +1,6 @@
 package com.fmp.proyectotc.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -20,11 +21,9 @@ public class Venta {
     @ManyToOne
     @JoinColumn(name = "cliente_id",referencedColumnName = "id_cliente")
     private Cliente cliente;
-    @ManyToMany
-    @JoinTable(name = "venta_producto",
-            joinColumns = @JoinColumn(name = "venta_id"),
-            inverseJoinColumns = @JoinColumn(name = "producto_id"))
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<DetalleVenta> detallesVenta;
 
 }
 

@@ -21,7 +21,7 @@
         }
         .venta {
             background-color: #ddd;
-            height: 300px;
+            height: auto;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -39,20 +39,7 @@
             font-size: 15px;
             margin: 15px;
         }
-        #formulario button {
-            font-weight: bold;
-            border: 1px solid #FFFFFF;
-            border-radius: 5px;
-            width: 60%; 
-            margin: 20px;
-            padding: 5px 10px;    
-        }    
-        #formulario button:hover{
-       transition: box-shadow 0.3s ease;  
-       box-shadow: 0 0 10px rgba(44, 44, 45, 0.5);
-    }   
-         
-    #volverIndice {
+        #volverIndice {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -61,16 +48,17 @@
             border-radius: 5px;
             text-decoration: none;
             color: #000;
-            border: 1px solid #FFFFFF;}
-    #volverIndice:hover {
-                transition: box-shadow 0.3s ease;
-                box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
+            border: 1px solid #FFFFFF;
+        }
+        #volverIndice:hover {
+            transition: box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
         }
     </style>
 </head>
 <body>
     <h1>Lista de Ventas</h1>
-    <a id="volverIndice" href="https://proyectotc.onrender.com">Volver al Índice</a>
+    <a id="volverIndice" href="https://proyectotoc.onrender.com">Volver al Índice</a>
 
     <div id="ventas"></div>
 
@@ -79,7 +67,7 @@
             fetchVentas();
 
             function fetchVentas() {
-                fetch(`https://proyectotc.onrender.com/ventas`)
+                fetch('https://proyectotc.onrender.com/ventas')
                     .then(response => response.json())
                     .then(data => {
                         const ventasContainer = document.getElementById('ventas');
@@ -88,12 +76,15 @@
                             const ventaDiv = document.createElement('div');
                             ventaDiv.classList.add('venta');
                             const fechaDMA = new Date(venta.fecha).toLocaleDateString('es-ES');
+                            const detalles = venta.detallesVenta.map(detalle => 
+                                `Producto ID: ${detalle.producto.codigo_producto}, Cantidad: ${detalle.cantidad}`
+                            ).join('<br>');
                             const safeHTML = DOMPurify.sanitize(`
                                 <h2>Fecha: ${fechaDMA}</h2>
-                                <h3><strong> Total: $${venta.total}</strong></h3>
+                                <h3><strong>Total: $${venta.total.toFixed(2)}</strong></h3>
                                 <p>Cliente ID: ${venta.cliente ? venta.cliente.id_cliente : 'Desconocido'}</p>
-                                <p>ID Productos: ${venta.productos.map(p => p.codigo_producto).join(', ')}</p>
-                                <h4> Venta ID: ${venta.id_venta}</h4>
+                                <p>Detalles de la Venta:<br>${detalles}</p>
+                                <h4>Venta ID: ${venta.id_venta}</h4>
                             `);
                             ventaDiv.innerHTML = safeHTML;
                             ventasContainer.appendChild(ventaDiv);

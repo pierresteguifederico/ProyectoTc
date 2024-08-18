@@ -1,5 +1,6 @@
 package com.fmp.proyectotc.service;
 
+import com.fmp.proyectotc.model.DetalleVenta;
 import com.fmp.proyectotc.model.Producto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,48 +8,41 @@ import com.fmp.proyectotc.model.Venta;
 import com.fmp.proyectotc.repository.VentaRepository;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 
 @Service
 public class VentaServiceImpl implements VentaService {
     private final VentaRepository ventaRepository;
     private final ProductoService productoService;
-    private final HashMap<Long, Integer> productoCantidad;
 
     public VentaServiceImpl(VentaRepository ventaRepository, ProductoService productoService, HashMap<Long, Integer> productoCantidad) {
         this.ventaRepository = ventaRepository;
         this.productoService = productoService;
-        this.productoCantidad = productoCantidad;
     }
 
     @Override
     @Transactional
     public Venta saveVenta(Venta venta) {
+        double total = 0.0;
 
-        double total = 0;
-        productoCantidad.clear();
-
-        for (Producto producto : venta.getProductos()) {
-            Long productoId = producto.getCodigo_producto();
-            productoCantidad.put(productoId, productoCantidad.getOrDefault(productoId, 0) + 1);}
-
-        for (Map.Entry<Long, Integer> entry : productoCantidad.entrySet()) {
-            Long productoId = entry.getKey();
-            int cantidadVendida = entry.getValue();
-
-            Producto producto = productoService.getProductoById(productoId);
+        for (DetalleVenta detalle : venta.getDetallesVenta()) {
+            Producto producto = productoService.getProductoById(detalle.getProducto().getCodigo_producto());
             if (producto == null) {
-                throw new RuntimeException("Producto no encontrado: " + productoId);
+                throw new RuntimeException("Producto no encontrado: " + detalle.getProducto().getCodigo_producto());
             }
 
-            if (producto.getStock() < cantidadVendida) {
-                throw new RuntimeException("Stock insuficiente para el producto: " + productoId);
+            if (producto.getStock() < detalle.getCantidad()) {
+                throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
             }
 
-            total += producto.getPrecio() * cantidadVendida;
-            producto.setStock(producto.getStock() - cantidadVendida);
-            productoService.saveProducto(producto);}
+            total += producto.getPrecio() * detalle.getCantidad();
+            producto.setStock(producto.getStock() - detalle.getCantidad());
+            productoService.saveProducto(producto);
+
+            detalle.setVenta(venta);
+            detalle.setProducto(producto);
+        }
 
         venta.setTotal(total);
         return ventaRepository.save(venta);
@@ -60,17 +54,12 @@ public class VentaServiceImpl implements VentaService {
         Venta venta = ventaRepository.findById(id_venta)
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
 
-        for (Producto producto : venta.getProductos()) {
-            Long productoId = producto.getCodigo_producto();
-            int cantidadVendida = productoCantidad.getOrDefault(productoId, 0);
-            Producto prod = productoService.getProductoById(productoId);
-
-            if (prod != null) {
-                prod.setStock(prod.getStock() + cantidadVendida);
-                productoService.saveProducto(prod);
-                productoCantidad.clear();
-            }
+        for (DetalleVenta detalle : venta.getDetallesVenta()) {
+            Producto producto = detalle.getProducto();
+            producto.setStock(producto.getStock() + detalle.getCantidad());
+            productoService.saveProducto(producto);
         }
+
         ventaRepository.deleteById(id_venta);
     }
 
@@ -90,43 +79,36 @@ public class VentaServiceImpl implements VentaService {
         Venta ventaOriginal = ventaRepository.findById(id_venta)
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
 
-        for (Map.Entry<Long, Integer> entry : productoCantidad.entrySet()) {
-            Long productoId = entry.getKey();
-            int cantidadOriginal = entry.getValue();
 
-            Producto producto = productoService.getProductoById(productoId);
-            if (producto != null) {
-                producto.setStock(producto.getStock() + cantidadOriginal);
-                productoService.saveProducto(producto);
-            }
-        }
-
-        productoCantidad.clear();
-        for (Producto producto : nuevaVenta.getProductos()) {
-            Long productoId = producto.getCodigo_producto();
-            productoCantidad.put(productoId, productoCantidad.getOrDefault(productoId, 0) + 1);
-        }
-
-        double total = 0.0;
-        for (Map.Entry<Long, Integer> entry : productoCantidad.entrySet()) {
-            Long productoId = entry.getKey();
-            int cantidadVendida = entry.getValue();
-
-            Producto producto = productoService.getProductoById(productoId);
-            if (producto == null) {
-                throw new RuntimeException("Producto no encontrado: " + productoId);
-            }
-
-            if (producto.getStock() < cantidadVendida) {
-                throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
-            }
-
-            total += producto.getPrecio() * cantidadVendida;
-            producto.setStock(producto.getStock() - cantidadVendida);
+        for (DetalleVenta detalle : ventaOriginal.getDetallesVenta()) {
+            Producto producto = detalle.getProducto();
+            producto.setStock(producto.getStock() + detalle.getCantidad());
             productoService.saveProducto(producto);
         }
 
-        ventaOriginal.setProductos(nuevaVenta.getProductos());
+        ventaOriginal.getDetallesVenta().clear();
+
+        double total = 0.0;
+        for (DetalleVenta nuevoDetalle : nuevaVenta.getDetallesVenta()) {
+            Producto producto = productoService.getProductoById(nuevoDetalle.getProducto().getCodigo_producto());
+            if (producto == null) {
+                throw new RuntimeException("Producto no encontrado: " + nuevoDetalle.getProducto().getCodigo_producto());
+            }
+
+            if (producto.getStock() < nuevoDetalle.getCantidad()) {
+                throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
+            }
+
+            total += producto.getPrecio() * nuevoDetalle.getCantidad();
+            producto.setStock(producto.getStock() - nuevoDetalle.getCantidad());
+            productoService.saveProducto(producto);
+
+            nuevoDetalle.setVenta(ventaOriginal);
+            nuevoDetalle.setProducto(producto);
+            ventaOriginal.getDetallesVenta().add(nuevoDetalle);
+        }
+
         ventaOriginal.setTotal(total);
         return ventaRepository.save(ventaOriginal);
-    }}
+    }
+}

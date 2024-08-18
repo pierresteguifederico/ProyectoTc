@@ -28,7 +28,8 @@
         #formulario input {
             border: none;
             border-radius: 5px;
-            width: 300px;
+            width: calc(100% - 22px); /* Ajusta el ancho para incluir el padding */
+            margin: 5px 0;
         }
         #formulario button {
             font-weight: bold;
@@ -38,12 +39,11 @@
             margin: 20px;
             padding: 5px 10px;    
         }    
-        #formulario button:hover{
-       transition: box-shadow 0.3s ease;  
-       box-shadow: 0 0 10px rgba(44, 44, 45, 0.5);
-    }   
-         
-    #volverIndice {
+        #formulario button:hover {
+            transition: box-shadow 0.3s ease;  
+            box-shadow: 0 0 10px rgba(44, 44, 45, 0.5);
+        }   
+        #volverIndice {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -52,10 +52,14 @@
             border-radius: 5px;
             text-decoration: none;
             color: #000;
-            border: 1px solid #FFFFFF;}
-    #volverIndice:hover {
-                transition: box-shadow 0.3s ease;
-                box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
+            border: 1px solid #FFFFFF;
+        }
+        #volverIndice:hover {
+            transition: box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(98, 98, 99, 0.5);
+        }
+        .producto {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -63,28 +67,63 @@
     <div id="formulario">
         <h1>Crear Venta</h1>
         <a id="volverIndice" href="https://proyectotc.onrender.com">Volver al Índice</a>
+
         <form id="venta_formulario">
             <label for="cliente_id">Cliente:</label>
-            <input type="text" id="cliente_id" name="cliente_id" required><br>
+            <input type="number" id="cliente_id" name="cliente_id" placeholder="ID del cliente" required><br>
             <label for="fecha_id">Fecha:</label>
             <input type="date" id="fecha_id" name="fecha_id" required><br>
-            <label for="productos_id">Productos (IDs separados por coma):</label>
-            <input type="text" id="productos_id" name="productos_id" required><br>
+            <div id="productos_container">
+                <div class="producto">
+                    <label for="producto_0_id">Producto 1:</label>
+                    <input type="number" id="producto_0_id" name="productos[0][id]" placeholder="ID del producto" required>
+                    <label for="producto_0_cantidad">Cantidad:</label>
+                    <input type="number" id="producto_0_cantidad" name="productos[0][cantidad]" placeholder="Cantidad" min="1" required>
+                </div>
+            </div>
+            <button type="button" id="agregar_producto">Agregar Producto</button>
             <button type="submit">Agregar Venta</button>
         </form>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const ventaForm = document.getElementById('venta_formulario');
+            const productosContainer = document.getElementById('productos_container');
+            let productoCount = 1;
+
+            document.getElementById('agregar_producto').addEventListener('click', () => {
+                const productoDiv = document.createElement('div');
+                productoDiv.classList.add('producto');
+                productoDiv.innerHTML = `
+                    <label for="producto_${productoCount}_id">Producto ${productoCount + 1}:</label>
+                    <input type="number" id="producto_${productoCount}_id" name="productos[${productoCount}][id]" placeholder="ID del producto" required>
+                    <label for="producto_${productoCount}_cantidad">Cantidad:</label>
+                    <input type="number" id="producto_${productoCount}_cantidad" name="productos[${productoCount}][cantidad]" placeholder="Cantidad" min="1" required>
+                `;
+                productosContainer.appendChild(productoDiv);
+                productoCount++;
+            });
 
             ventaForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
 
-                const nuevaVenta = {
-                    cliente: { id_cliente: document.getElementById('cliente_id').value },
-                    fecha: document.getElementById('fecha_id').value,
-                    productos: document.getElementById('productos_id').value.split(',').map(id => ({ codigo_producto: parseInt(id.trim()) }))
+                const formData = new FormData(ventaForm);
+                const datosVenta = {
+                    cliente: { id_cliente: formData.get('cliente_id') },
+                    fecha: formData.get('fecha_id'),
+                    detallesVenta: []
                 };
+
+                for (let i = 0; i < productoCount; i++) {
+                    const productoId = formData.get(`productos[${i}][id]`);
+                    const cantidad = formData.get(`productos[${i}][cantidad]`);
+                    if (productoId && cantidad) {
+                        datosVenta.detallesVenta.push({
+                            producto: { codigo_producto: parseInt(productoId.trim()) },
+                            cantidad: parseInt(cantidad.trim())
+                        });
+                    }
+                }
 
                 try {
                     const response = await fetch('https://proyectotc.onrender.com/ventas/crear', {
@@ -92,17 +131,33 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(nuevaVenta)
+                        body: JSON.stringify(datosVenta)
                     });
+
+                    const responseBody = await response.text(); // Lee la respuesta como texto
+
                     if (response.ok) {
                         alert("Venta creada con éxito");
                         ventaForm.reset();
+                        productosContainer.innerHTML = `<div class="producto">
+                            <label for="producto_0_id">Producto 1:</label>
+                            <input type="number" id="producto_0_id" name="productos[0][id]" placeholder="ID del producto" required>
+                            <label for="producto_0_cantidad">Cantidad:</label>
+                            <input type="number" id="producto_0_cantidad" name="productos[0][cantidad]" placeholder="Cantidad" min="1" required>
+                        </div>`;
+                        productoCount = 1;
                     } else {
-                        const errorData = await response.json();
-                        alert(`Error al crear la venta: ${errorData.error}`);
+                        let errorMessage = 'Error desconocido';
+                        try {
+                            const errorData = JSON.parse(responseBody); // Intenta parsear la respuesta como JSON
+                            errorMessage = errorData.error || 'Error desconocido';
+                        } catch (e) {
+                            errorMessage = responseBody; // Si el JSON no es válido, usa la respuesta como texto
+                        }
+                        alert(`Error al crear la venta: ${errorMessage}`);
                     }
                 } catch (error) {
-                    alert("Error al crear la venta");
+                    alert("Error al crear la venta: " + error.message);
                 }
             });
         });
